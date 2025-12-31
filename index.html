@@ -3,224 +3,465 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#e9dccf" />
+  <meta name="theme-color" content="#050706" />
   <title>75 Soft Challenge</title>
 
   <style>
     :root{
-      --bg:#fbf6f0;
-      --card:#fffaf4;
-      --ink:#1e1b18;
-      --muted:#6d625b;
-      --accent:#e9dccf;
-      --dot:#eadfd6;
-      --dotOn:#2a2521;
-      --shadow: 0 10px 30px rgba(20, 15, 10, .08);
-      --radius:18px;
-      --ring: rgba(42, 37, 33, .12);
+      --bg:#050706;
+      --bg2:#070b09;
+      --card:#0b0f0d;
+      --card2:#0f1512;
+      --ink:#eaf7ef;
+      --muted:#9fb5aa;
+      --accent:#16ff7a;
+      --accent2:#00c853;
+      --ring: rgba(22,255,122,.18);
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --radius:20px;
+      --grid: rgba(255,255,255,.04);
     }
+
     *{box-sizing:border-box}
+
     body{
       margin:0;
-      font-family: ui-serif, Georgia, "Times New Roman", serif;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
       color:var(--ink);
-      background:var(--bg);
+      background:
+        radial-gradient(1200px 800px at 20% -10%, rgba(22,255,122,.14), transparent 55%),
+        radial-gradient(900px 600px at 110% 10%, rgba(0,200,83,.10), transparent 55%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
       -webkit-font-smoothing:antialiased;
-      padding: 18px 14px 40px;
+      padding: 18px 14px 44px;
     }
-    .wrap{max-width: 900px; margin:0 auto;}
+
+    .wrap{max-width: 980px; margin:0 auto;}
+
     header{
-      display:flex; align-items:flex-start; justify-content:space-between;
-      gap:12px; margin-bottom:14px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      margin: 10px 0 14px;
     }
+
     h1{
       margin:0;
-      font-size: 40px;
-      letter-spacing: .4px;
+      font-size: 34px;
+      letter-spacing: -.02em;
       line-height: 1.05;
     }
+
     .sub{
-      margin-top:6px;
+      margin-top:8px;
       color:var(--muted);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
       font-size: 13px;
     }
-    .topActions{
-      display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;
-    }
-    button, .btnLike{
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 10px 12px;
+      border-radius: 999px;
       border:1px solid var(--ring);
-      background: var(--card);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      color: var(--ink);
+      font-size: 13px;
+      user-select:none;
+      white-space:nowrap;
+    }
+
+    .pill .dotLive{
+      width: 8px; height: 8px; border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(22,255,122,.14), 0 0 18px rgba(22,255,122,.55);
+    }
+
+    .topbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      margin: 8px 0 14px;
+    }
+
+    .group{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
+
+    .chip{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border:1px solid var(--ring);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      color: var(--ink);
+      font-size: 13px;
+    }
+
+    input[type="date"], select{
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.25);
+      color: var(--ink);
+      padding: 8px 10px;
+      border-radius: 12px;
+      outline:none;
+      font-size: 13px;
+    }
+
+    .btn{
+      border: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
       color: var(--ink);
       padding: 10px 12px;
       border-radius: 14px;
-      box-shadow: 0 8px 18px rgba(20,15,10,.06);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      font-size: 13px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
       cursor:pointer;
-      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      font-size: 13px;
     }
-    button:active{transform: translateY(1px)}
+
+    .btn:active{ transform: translateY(1px); }
+
+    .btn.primary{
+      border-color: rgba(22,255,122,.35);
+      box-shadow: 0 0 0 6px rgba(22,255,122,.08), 0 18px 40px rgba(22,255,122,.12);
+    }
+
     .stats{
       display:grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap:10px;
-      margin: 10px 0 14px;
+      gap: 10px;
+      margin: 8px 0 14px;
     }
+
     .stat{
-      background:var(--card);
-      border:1px solid var(--ring);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border: 1px solid rgba(22,255,122,.14);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding:12px 12px;
-    }
-    .stat .label{
-      color:var(--muted);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      font-size:12px;
-      margin-bottom:6px;
-    }
-    .stat .value{
-      font-size:18px;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      font-weight: 650;
+      padding: 12px 12px;
+      backdrop-filter: blur(8px);
     }
 
-    .controls{
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
-      margin: 10px 0 14px;
-    }
-    .select{
-      display:flex; gap:8px; align-items:center;
-      background:var(--card);
-      border:1px solid var(--ring);
-      border-radius: 14px;
-      padding: 10px 12px;
-      box-shadow: 0 8px 18px rgba(20,15,10,.06);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      font-size: 13px;
-    }
-    select{
-      border:none;
-      background:transparent;
-      font-size:13px;
-      outline:none;
-    }
+    .stat .label{color: rgba(234,247,239,.70); font-size: 12px; letter-spacing: .08em; text-transform: uppercase;}
+    .stat .value{margin-top:6px; font-size: 18px; font-weight: 750;}
 
     .weekCard{
-      background:var(--card);
-      border:1px solid var(--ring);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border: 1px solid rgba(22,255,122,.14);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow:hidden;
+      backdrop-filter: blur(8px);
     }
+
     .weekHeader{
-      background: var(--accent);
-      padding: 12px 14px;
-      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 14px 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      background:
+        linear-gradient(90deg, rgba(22,255,122,.16), rgba(0,200,83,.08) 45%, rgba(255,255,255,0) 90%);
+      border-bottom: 1px solid rgba(22,255,122,.12);
+    }
+
+    .weekHeader h2{
+      margin:0;
+      font-size: 18px;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      color: rgba(234,247,239,.92);
+      display:flex;
+      align-items:center;
       gap:10px;
     }
-    .weekTitle{
-      font-size: 28px;
-      margin:0;
+
+    .badge{
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(234,247,239,.78);
+      border: 1px solid rgba(255,255,255,.10);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.18);
+      white-space:nowrap;
     }
+
     .dow{
       display:grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap:10px;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      font-size: 12px;
-      color: rgba(30,27,24,.85);
-      letter-spacing: .12em;
+      grid-template-columns:repeat(7, 1fr);
+      gap: 8px;
+      font-size: 11px;
+      letter-spacing: .22em;
       text-transform: uppercase;
+      color: rgba(234,247,239,.75);
       width: 260px;
       text-align:center;
+      font-weight: 650;
     }
-    .weekBody{ padding: 10px 14px 14px; }
+
+    .weekBody{
+      padding: 10px 14px 14px;
+      background:
+        linear-gradient(to right, var(--grid) 1px, transparent 1px) 0 0/36px 36px,
+        linear-gradient(to bottom, var(--grid) 1px, transparent 1px) 0 0/36px 36px;
+    }
+
     .row{
       display:grid;
       grid-template-columns: 1fr 260px;
-      gap: 10px;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
       align-items:center;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(42,37,33,.06);
     }
-    .row:last-child{border-bottom:none}
+    .row:last-child{ border-bottom:none; }
+
     .task{
-      font-size: 16px;
-      line-height: 1.2;
+      font-size: 14px;
+      color: rgba(234,247,239,.92);
+      line-height: 1.25;
     }
+
+    .goalWrap{display:flex; gap:10px; flex-direction:column;}
+
+    .goalInput{
+      width: 100%;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.25);
+      color: var(--ink);
+      padding: 10px 12px;
+      border-radius: 14px;
+      outline:none;
+      font-size: 14px;
+    }
+
     .dots{
       display:grid;
       grid-template-columns: repeat(7, 1fr);
-      gap:10px;
+      gap: 10px;
+      align-items:center;
       justify-items:center;
     }
+
     .dot{
-      width: 22px; height: 22px;
+      width: 22px;
+      height: 22px;
       border-radius: 999px;
-      background: var(--dot);
-      border: 1px solid rgba(42,37,33,.05);
-      cursor:pointer;
-      position:relative;
-      outline:none;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.10), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.35);
+      cursor: pointer;
+      padding: 0;
+      appearance: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform .08s ease, box-shadow .2s ease, border-color .2s ease;
     }
+
+    .dot:active{ transform: scale(.96); }
+
+    .dot:focus-visible{
+      outline: 2px solid rgba(22,255,122,.65);
+      outline-offset: 3px;
+    }
+
     .dot.on{
-      background: var(--dotOn);
-      border-color: rgba(42,37,33,.2);
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), rgba(255,255,255,.06) 35%, rgba(22,255,122,.18) 70%),
+                  linear-gradient(180deg, rgba(22,255,122,.95), rgba(0,200,83,.75));
+      border-color: rgba(22,255,122,.55);
+      box-shadow:
+        0 0 0 6px rgba(22,255,122,.10),
+        0 14px 34px rgba(22,255,122,.16),
+        inset 0 0 0 1px rgba(0,0,0,.25);
     }
-    .dot.on::after{
-      content:"";
-      position:absolute; inset:6px;
-      border-radius:999px;
-      background: rgba(255,250,244,.95);
-      opacity:.12;
-    }
-    .goalInput{
-      width: 100%;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      font-size: 14px;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid var(--ring);
-      background: #fff;
-      outline:none;
+
+    .dot.disabled{
+      opacity: .30;
+      cursor: not-allowed;
     }
 
     .footerNote{
       margin-top: 14px;
-      color:var(--muted);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color: rgba(234,247,239,.68);
       font-size: 12px;
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
-    /* Mobile: stack columns */
+    /* checklist */
+    .checkList{display:flex; flex-direction:column; gap:10px;}
+    .checkItem{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 12px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.18);
+    }
+    .checkText{font-size:14px; color: rgba(234,247,239,.92); line-height:1.25;}
+    .checkToggle{
+      width: 26px; height: 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+      position:relative;
+    }
+    .checkToggle.on{
+      border-color: rgba(22,255,122,.55);
+      background: linear-gradient(180deg, rgba(22,255,122,.95), rgba(0,200,83,.75));
+      box-shadow: 0 0 0 6px rgba(22,255,122,.10), 0 14px 34px rgba(22,255,122,.16);
+    }
+    .checkToggle.on::after{
+      content:"";
+      position:absolute;
+      inset:7px;
+      border-right: 2px solid rgba(0,0,0,.55);
+      border-bottom: 2px solid rgba(0,0,0,.55);
+      transform: rotate(45deg);
+    }
+
+    /* Heatmap */
+    #heatmapGrid{
+      display:grid;
+      grid-template-columns: repeat(15, minmax(12px, 1fr));
+      gap: 8px;
+      padding: 10px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.18);
+      position: relative;
+    }
+
+    /* week separators every 7 days */
+    .weekSep{
+      position:absolute;
+      top:10px; bottom:10px;
+      width:1px;
+      background: rgba(255,255,255,.10);
+      pointer-events:none;
+    }
+
+    .dayCell{
+      aspect-ratio: 1 / 1;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.35);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      position: relative;
+      overflow: hidden;
+      transition: transform .08s ease, filter .15s ease;
+    }
+
+    .dayCell:active{ transform: scale(.97); }
+
+    .dayCell.future{
+      opacity: .22;
+      cursor: default;
+    }
+
+    .dayCell.today{
+      outline: 2px solid rgba(22,255,122,.55);
+      outline-offset: 2px;
+    }
+
+    .dayCell.done{
+      border-color: currentColor;
+      box-shadow: 0 0 0 6px rgba(255,255,255,.10), 0 14px 30px rgba(0,0,0,.25);
+    }
+
+    .dayNum{
+      position:absolute;
+      top: 6px;
+      right: 7px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .02em;
+      color: rgba(5,7,6,.78);
+      text-shadow: 0 1px 0 rgba(255,255,255,.12);
+      user-select:none;
+      pointer-events:none;
+    }
+
+    .taskCount{
+      position:absolute;
+      bottom: 6px;
+      left: 7px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      color: rgba(5,7,6,.78);
+      background: rgba(255,255,255,.35);
+      padding: 2px 6px;
+      border-radius: 999px;
+      line-height: 1;
+      user-select:none;
+      pointer-events:none;
+    }
+
+    .taskStar{
+      position:absolute;
+      bottom: 5px;
+      left: 7px;
+      font-size: 12px;
+      font-weight: 900;
+      color: rgba(5,7,6,.85);
+      background: none;
+      padding: 0;
+      border-radius: 0;
+      line-height: 1;
+      filter: none;
+      user-select:none;
+      pointer-events:none;
+    }
+    }
+    }
+    }
+
+    /* If the cell is dim (0%), keep number subtle */
+    .dayCell.dimNum .dayNum{ opacity: .45; }
+
     @media (max-width: 620px){
-      h1{font-size:34px}
+      .dayNum{ font-size: 9px; top:5px; right:6px; }
+    }
+
+    @media (max-width: 820px){
       .stats{grid-template-columns:1fr}
-      .row{grid-template-columns:1fr}
+    }
+
+    @media (max-width: 620px){
+      h1{font-size:30px}
       .dow{width:100%}
+      .row{grid-template-columns:1fr}
       .dots{justify-items:start}
       .dot{width:24px;height:24px}
     }
   </style>
 </head>
-
 <body>
   <div class="wrap">
     <header>
       <div>
         <h1>75 Soft Challenge</h1>
-        <div class="sub">Tap the circles. Everything saves automatically on this device.</div>
+        <div class="sub">Black/green tracker • tap to toggle • auto-saves</div>
       </div>
-      <div class="topActions">
-        <button id="todayBtn" title="Jump to current week">Today</button>
-        <button id="exportBtn" title="Download a backup JSON">Export</button>
-        <label class="btnLike" title="Restore from a backup JSON">
-          Import<input id="importInput" type="file" accept="application/json" hidden>
-        </label>
-        <button id="resetBtn" title="Clear all checkmarks">Reset</button>
+      <div class="pill" title="Lock in mode">
+        <span class="dotLive"></span>
+        <span>LOCK IN</span>
       </div>
     </header>
 
@@ -239,429 +480,802 @@
       </div>
     </section>
 
-    <div class="controls">
-      <div class="select">
-        <span>Start date</span>
-        <input id="startDate" type="date" style="border:none;background:transparent;outline:none;font-family:inherit;font-size:13px;">
+    <section class="weekCard" id="chartCard" style="margin: 0 0 14px;">
+      <div class="weekHeader">
+        <h2>Progress <span class="badge" id="chartBadge">Day 1 / 75</span></h2>
+        <div class="badge" style="border-color: rgba(22,255,122,.22);">75-day heatmap</div>
+      </div>
+      <div class="weekBody" style="padding:14px;">
+        <div id="heatmapWrap">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="badge">Legend</span>
+              <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:rgba(234,247,239,.75);">
+                <span style="width:12px; height:12px; border-radius:4px; background:rgba(22,255,122,.15);"></span> 0%
+                <span style="width:12px; height:12px; border-radius:4px; background:rgba(22,255,122,.5);"></span> 50%
+                <span style="width:12px; height:12px; border-radius:4px; background:rgba(22,255,122,1);"></span> 100%
+              </div>
+            </div>
+            <div class="chip">
+              <span style="opacity:.85; letter-spacing:.08em; text-transform:uppercase; font-size:12px;">Palette</span>
+              <select id="paletteSelect">
+                <option value="green">Green</option>
+                <option value="amber">Amber</option>
+                <option value="blue">Blue</option>
+                <option value="purple">Purple</option>
+                <option value="red">Red</option>
+                <option value="pink">Pink</option>
+                <option value="mono">Monochrome</option>
+              </select>
+            </div>
+          </div>
+          <div id="heatmapGrid" aria-label="75-day progress heatmap"></div>
+          <div class="footerNote" style="margin-top:10px; opacity:.9;">
+            Each square = 1 day. Brighter = more tasks completed. Full bright = all tasks done. (You can fill future days too.)
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <div class="topbar">
+      <div class="group">
+        <div class="chip">
+          <span style="opacity:.85; letter-spacing:.08em; text-transform:uppercase; font-size:12px;">Start date</span>
+          <input id="startDate" type="date" />
+        </div>
+
+        <div class="chip">
+          <span style="opacity:.85; letter-spacing:.08em; text-transform:uppercase; font-size:12px;">View</span>
+          <select id="viewSelect">
+            <option value="week">Week</option>
+            <option value="day">Day</option>
+          </select>
+        </div>
+
+        <div class="chip" id="weekPicker">
+          <span style="opacity:.85; letter-spacing:.08em; text-transform:uppercase; font-size:12px;">Week</span>
+          <select id="weekSelect"></select>
+        </div>
       </div>
 
-      <div class="select">
-        <span>Week</span>
-        <select id="weekSelect"></select>
+      <div class="group">
+        <button class="btn primary" id="todayBtn" type="button">Today</button>
+        <button class="btn" id="exportBtn" type="button">Export</button>
+        <label class="btn" style="display:inline-flex; align-items:center; gap:10px; cursor:pointer;">
+          Import <input id="importInput" type="file" accept="application/json" hidden>
+        </label>
+        <button class="btn" id="resetBtn" type="button">Reset</button>
       </div>
     </div>
 
-    <section class="weekCard" id="weekCard">
-      <!-- Rendered by JS -->
-    </section>
+    <section class="weekCard" id="weekCard"></section>
+    <section class="weekCard" id="dayCard" style="display:none"></section>
 
     <div class="footerNote">
-      Tip: on iPhone use <b>Share → Add to Home Screen</b>. On Android (Chrome) use <b>⋮ → Add to Home screen</b>.
-      Export a backup if you’re switching phones.
+      Tip (Android): open this page in Chrome → ⋮ → <b>Add to Home screen</b> for an app icon. Export a backup before switching phones.
     </div>
   </div>
 
 <script>
-/* ===== 75 Soft PWA-like tracker (single file) ===== */
+  function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
 
-const DEFAULT_TASKS = [
-  "Eat well; follow your diet plan",
-  "Drink 3L of water to hydrate",
-  "Daily 45-minute workout",
-  "Only drink at social events",
-  "Read 10 pages of any book",
-  "Personal goal:"
-];
-
-const DOW = ["M","T","W","T","F","S","S"]; // matches your sheet
-const STORAGE_KEY = "soft75_state_v1";
-
-function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
-
-function toISODate(d){
-  const dt = new Date(d);
-  dt.setHours(0,0,0,0);
-  return dt.toISOString().slice(0,10);
-}
-function parseISO(s){
-  const [y,m,d] = s.split("-").map(Number);
-  const dt = new Date(y, m-1, d);
-  dt.setHours(0,0,0,0);
-  return dt;
-}
-
-// Monday-based day index (Mon=0..Sun=6)
-function mondayIndex(date){
-  const js = date.getDay(); // Sun=0..Sat=6
-  return (js + 6) % 7;
-}
-
-// Given a date, return the Monday of its week
-function weekStartMonday(date){
-  const dt = new Date(date);
-  dt.setHours(0,0,0,0);
-  const idx = mondayIndex(dt);
-  dt.setDate(dt.getDate() - idx);
-  return dt;
-}
-
-function weeksBetween(start, date){
-  const ms = weekStartMonday(date) - weekStartMonday(start);
-  return Math.floor(ms / (7*24*60*60*1000));
-}
-
-function makeEmptyGrid(){
-  // 75 days -> 11 weeks (77 days) but we only count 75; still show 11 weeks for clean grid.
-  // We'll store as 11 weeks x tasks x 7
-  const weeks = 11;
-  const tasks = DEFAULT_TASKS.length;
-  const grid = Array.from({length: weeks}, () =>
-    Array.from({length: tasks}, () => Array.from({length: 7}, () => false))
-  );
-  return grid;
-}
-
-function defaultState(){
-  // pick today as start date by default, snapped to Monday for nicer Week 1
-  const today = new Date();
-  const start = weekStartMonday(today);
-  return {
-    version: 1,
-    startDate: toISODate(start),
-    tasks: [...DEFAULT_TASKS],
-    personalGoalText: "",
-    grid: makeEmptyGrid()
-  };
-}
-
-function loadState(){
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(!raw) return defaultState();
-    const parsed = JSON.parse(raw);
-
-    // Minimal migration / sanity checks
-    if(!parsed.grid || !parsed.tasks) return defaultState();
-    if(parsed.tasks.length !== DEFAULT_TASKS.length){
-      // keep old checks where possible
-      const st = defaultState();
-      st.startDate = parsed.startDate || st.startDate;
-      st.personalGoalText = parsed.personalGoalText || "";
-      // copy overlap
-      for(let w=0; w<Math.min(st.grid.length, parsed.grid.length); w++){
-        for(let t=0; t<Math.min(st.tasks.length, parsed.tasks.length); t++){
-          for(let d=0; d<7; d++){
-            st.grid[w][t][d] = !!(parsed.grid[w]?.[t]?.[d]);
-          }
-        }
-      }
-      return st;
-    }
-    return parsed;
-  }catch(e){
-    return defaultState();
-  }
-}
-
-function saveState(){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-}
-
-function totalCheckmarksPossible(){
-  // We show 11*tasks*7 but challenge is 75 days; we’ll compute progress only for first 75 days * tasks.
-  // Convert week/day into absolute day index from startDate Monday.
-  const tasks = state.tasks.length;
-  return 75 * tasks;
-}
-
-function isWithin75(absDayIndex){
-  return absDayIndex >= 0 && absDayIndex < 75;
-}
-
-function getAbsDayIndex(weekIdx, dayIdx){
-  return weekIdx*7 + dayIdx;
-}
-
-function completedCheckmarks(){
-  let done = 0;
-  const tasks = state.tasks.length;
-  for(let w=0; w<state.grid.length; w++){
-    for(let d=0; d<7; d++){
-      const abs = getAbsDayIndex(w,d);
-      if(!isWithin75(abs)) continue;
-      for(let t=0; t<tasks; t++){
-        if(state.grid[w][t][d]) done++;
-      }
-    }
-  }
-  return done;
-}
-
-function calcStreak(){
-  // streak counts consecutive days from today backwards where ALL tasks are checked for that day
-  const start = parseISO(state.startDate);
-  const today = new Date(); today.setHours(0,0,0,0);
-
-  // if today is before start date, streak is 0
-  if(today < start) return 0;
-
-  const absToday = Math.floor((today - start) / (24*60*60*1000));
-  let streak = 0;
-  for(let abs = absToday; abs >= 0; abs--){
-    if(!isWithin75(abs)) continue; // beyond 75 doesn't count
-    const w = Math.floor(abs / 7);
-    const d = abs % 7;
-    let all = true;
-    for(let t=0; t<state.tasks.length; t++){
-      if(!state.grid[w]?.[t]?.[d]) { all = false; break; }
-    }
-    if(all) streak++;
-    else break;
-  }
-  return streak;
-}
-
-function updateStats(){
-  const done = completedCheckmarks();
-  const total = totalCheckmarksPossible();
-  const pct = total ? Math.round((done/total)*100) : 0;
-
-  document.getElementById("progressText").textContent = pct + "%";
-  document.getElementById("checksText").textContent = `${done} / ${total}`;
-  document.getElementById("streakText").textContent = String(calcStreak());
-}
-
-function buildWeekOptions(){
-  const sel = document.getElementById("weekSelect");
-  sel.innerHTML = "";
-  for(let i=0;i<state.grid.length;i++){
-    const opt = document.createElement("option");
-    opt.value = i;
-    opt.textContent = `Week ${i+1}`;
-    sel.appendChild(opt);
-  }
-}
-
-function renderWeek(weekIdx){
-  weekIdx = clamp(Number(weekIdx)||0, 0, state.grid.length-1);
-  const card = document.getElementById("weekCard");
-
-  const header = document.createElement("div");
-  header.className = "weekHeader";
-
-  const title = document.createElement("h2");
-  title.className = "weekTitle";
-  title.textContent = `Week ${weekIdx+1}`;
-
-  const dow = document.createElement("div");
-  dow.className = "dow";
-  for(const d of DOW){
-    const span = document.createElement("div");
-    span.textContent = d;
-    dow.appendChild(span);
+  function todayIndex(){
+    const start = parseISO(state.startDate);
+    // week separators
+    const gridEl = document.getElementById("heatmapGrid");
+    gridEl.querySelectorAll('.weekSep').forEach(e=>e.remove());
+    const today = new Date(); today.setHours(0,0,0,0);
+    return clamp(Math.floor((today - start)/(24*60*60*1000)), 0, 74);
   }
 
-  header.appendChild(title);
-  header.appendChild(dow);
+  function setDay(abs){
+    currentDayIndex = clamp(abs, 0, 74);
+    renderDay(currentDayIndex);
+  }
 
-  const body = document.createElement("div");
-  body.className = "weekBody";
+  function renderDay(absIndex){
+    const card = document.getElementById("dayCard");
+    card.innerHTML = "";
 
-  state.tasks.forEach((taskText, taskIdx) => {
-    const row = document.createElement("div");
-    row.className = "row";
+    const w = Math.floor(absIndex / 7);
+    const d = absIndex % 7;
 
-    const left = document.createElement("div");
-    left.className = "task";
+    const header = document.createElement("div");
+    header.className = "weekHeader";
 
-    // Personal goal special row with input
-    if(taskIdx === state.tasks.length - 1){
-      const label = document.createElement("div");
-      label.textContent = taskText;
-      label.style.marginBottom = "8px";
+    const leftControls = document.createElement("div");
+    leftControls.style.display = "flex";
+    leftControls.style.alignItems = "center";
+    leftControls.style.gap = "10px";
 
-      const input = document.createElement("input");
-      input.className = "goalInput";
-      input.placeholder = "Type your personal goal (editable)…";
-      input.value = state.personalGoalText || "";
-      input.addEventListener("input", () => {
-        state.personalGoalText = input.value;
-        saveState();
-      });
+    const prevBtn = document.createElement("button");
+    prevBtn.type = "button";
+    prevBtn.className = "btn";
+    prevBtn.textContent = "◀";
+    prevBtn.title = "Previous day";
+    prevBtn.addEventListener("click", () => setDay(absIndex - 1));
 
-      left.appendChild(label);
-      left.appendChild(input);
-    } else {
+    const nextBtn = document.createElement("button");
+    nextBtn.type = "button";
+    nextBtn.className = "btn";
+    nextBtn.textContent = "▶";
+    nextBtn.title = "Next day";
+    nextBtn.addEventListener("click", () => setDay(absIndex + 1));
+
+    const h2 = document.createElement("h2");
+    const date = new Date(parseISO(state.startDate));
+    date.setDate(date.getDate() + absIndex);
+    h2.textContent = date.toLocaleDateString(undefined, {weekday:"long", month:"short", day:"numeric"});
+
+    const badge = document.createElement("span");
+    badge.className = "badge";
+    badge.textContent = `Day ${absIndex + 1} / 75`;
+    h2.appendChild(badge);
+
+    // disable ends
+    prevBtn.disabled = absIndex <= 0;
+    nextBtn.disabled = absIndex >= 74;
+    prevBtn.style.opacity = prevBtn.disabled ? ".45" : "1";
+    nextBtn.style.opacity = nextBtn.disabled ? ".45" : "1";
+
+    leftControls.appendChild(prevBtn);
+    leftControls.appendChild(nextBtn);
+
+    header.appendChild(h2);
+    header.appendChild(leftControls);
+
+    const body = document.createElement("div");
+    body.className = "weekBody";
+
+    state.tasks.forEach((taskText, taskIdx) => {
+      const row = document.createElement("div");
+      row.className = "row";
+
+      const left = document.createElement("div");
+      left.className = "task";
       left.textContent = taskText;
-    }
 
-    const dots = document.createElement("div");
-    dots.className = "dots";
+      const dots = document.createElement("div");
+      dots.className = "dots";
 
-    for(let dayIdx=0; dayIdx<7; dayIdx++){
-      const abs = getAbsDayIndex(weekIdx, dayIdx);
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "dot" + (state.grid[weekIdx][taskIdx][dayIdx] ? " on" : "");
-      btn.setAttribute("aria-label", `${taskText} day ${dayIdx+1}`);
-      btn.title = isWithin75(abs) ? "Tap to toggle" : "Outside 75 days";
-
-      if(!isWithin75(abs)){
-        btn.style.opacity = ".35";
-        btn.style.cursor = "not-allowed";
-        btn.disabled = true;
-      } else {
-        btn.addEventListener("click", () => {
-          state.grid[weekIdx][taskIdx][dayIdx] = !state.grid[weekIdx][taskIdx][dayIdx];
-          saveState();
-          renderWeek(weekIdx);
-          updateStats();
-        });
-      }
+      btn.className = "dot" + (state.grid[w][taskIdx][d] ? " on" : "");
+      btn.addEventListener("click", () => {
+        state.grid[w][taskIdx][d] = !state.grid[w][taskIdx][d];
+        saveState();
+        renderDay(absIndex);
+        updateStats();
+      });
 
       dots.appendChild(btn);
-    }
-
-    row.appendChild(left);
-    row.appendChild(dots);
-    body.appendChild(row);
-  });
-
-  card.innerHTML = "";
-  card.appendChild(header);
-  card.appendChild(body);
-  updateStats();
-}
-
-function jumpToToday(){
-  const start = parseISO(state.startDate);
-  const today = new Date(); today.setHours(0,0,0,0);
-  const weekIdx = clamp(weeksBetween(start, today), 0, state.grid.length-1);
-  document.getElementById("weekSelect").value = String(weekIdx);
-  renderWeek(weekIdx);
-}
-
-function exportJSON(){
-  const blob = new Blob([JSON.stringify(state, null, 2)], {type:"application/json"});
-  const a = document.createElement("a");
-  const ts = new Date().toISOString().slice(0,10);
-  a.href = URL.createObjectURL(blob);
-  a.download = `75-soft-backup-${ts}.json`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(a.href);
-}
-
-async function importJSON(file){
-  const text = await file.text();
-  const obj = JSON.parse(text);
-  // basic validation
-  if(!obj || !obj.grid || !obj.tasks) throw new Error("Invalid backup file.");
-  state = obj;
-  saveState();
-  initUI();
-}
-
-function resetAll(){
-  if(!confirm("Reset all checkmarks? This clears your progress on this device.")) return;
-  const keepStart = state.startDate;
-  const keepGoal = state.personalGoalText || "";
-  state = defaultState();
-  state.startDate = keepStart;
-  state.personalGoalText = keepGoal;
-  saveState();
-  initUI();
-}
-
-/* ===== PWA install/offline (minimal) ===== */
-function registerServiceWorker(){
-  if(!("serviceWorker" in navigator)) return;
-
-  // create a tiny service worker from a Blob so we stay single-file
-  const swCode = `
-    const CACHE_NAME = "soft75-cache-v1";
-    self.addEventListener("install", (e) => {
-      e.waitUntil((async () => {
-        const cache = await caches.open(CACHE_NAME);
-        await cache.addAll(["./"]);
-        self.skipWaiting();
-      })());
+      row.appendChild(left);
+      row.appendChild(dots);
+      body.appendChild(row);
     });
-    self.addEventListener("activate", (e) => {
-      e.waitUntil(self.clients.claim());
-    });
-    self.addEventListener("fetch", (e) => {
-      e.respondWith((async () => {
-        const cached = await caches.match(e.request);
-        if(cached) return cached;
-        try{
-          const res = await fetch(e.request);
-          const cache = await caches.open(CACHE_NAME);
-          cache.put(e.request, res.clone());
-          return res;
-        }catch(err){
-          return caches.match("./");
-        }
-      })());
-    });
-  `;
-  const swBlob = new Blob([swCode], {type:"text/javascript"});
-  const swUrl = URL.createObjectURL(swBlob);
-  navigator.serviceWorker.register(swUrl).catch(()=>{});
-}
 
-function setStartDate(dateStr){
-  state.startDate = dateStr;
-  saveState();
-  jumpToToday();
-  updateStats();
-}
+    card.appendChild(header);
+    card.appendChild(body);
 
-function initUI(){
-  buildWeekOptions();
+    // Swipe left/right to change day (mobile)
+    let x0 = null;
+    card.ontouchstart = (e) => { x0 = e.changedTouches?.[0]?.clientX ?? null; };
+    card.ontouchend = (e) => {
+      if(x0 === null) return;
+      const x1 = e.changedTouches?.[0]?.clientX ?? x0;
+      const dx = x1 - x0;
+      x0 = null;
+      if(Math.abs(dx) < 50) return;
+      if(dx < 0) setDay(absIndex + 1); // swipe left -> next
+      else setDay(absIndex - 1);        // swipe right -> prev
+    };
+    updateStats();
+  }
 
-  // Start date input
-  const startInput = document.getElementById("startDate");
-  startInput.value = state.startDate || toISODate(new Date());
-  startInput.addEventListener("change", () => {
-    // Snap chosen date to Monday so the weeks match the sheet nicely
-    const chosen = parseISO(startInput.value);
-    const monday = weekStartMonday(chosen);
-    startInput.value = toISODate(monday);
-    setStartDate(startInput.value);
-  });
+  /* 75 Soft — full 11-week grid (counts first 75 days) */
+  const STORAGE_KEY = "soft75_state_v2";
 
-  // Week select
-  const sel = document.getElementById("weekSelect");
-  sel.addEventListener("change", () => renderWeek(sel.value));
+  const TASKS = [
+    "Eat well; follow your diet plan",
+    "Drink 3L of water to hydrate",
+    "Daily 45-minute workout",
+    "Only drink at social events",
+    "Read 10 pages of any book",
+    "Personal goal:" // editable text line
+  ];
 
-  // Buttons
-  document.getElementById("todayBtn").addEventListener("click", jumpToToday);
-  document.getElementById("exportBtn").addEventListener("click", exportJSON);
-  document.getElementById("resetBtn").addEventListener("click", resetAll);
+  const DOW = ["M","T","W","T","F","S","S"]; // Monday-based
+  const WEEKS = 11; // 77 slots, but we only count 75 days
 
-  const importInput = document.getElementById("importInput");
-  importInput.addEventListener("change", async () => {
-    if(!importInput.files?.[0]) return;
+  function toISODate(d){
+    const dt = new Date(d);
+    dt.setHours(0,0,0,0);
+    return dt.toISOString().slice(0,10);
+  }
+
+  function parseISO(s){
+    const [y,m,d] = s.split("-").map(Number);
+    const dt = new Date(y, m-1, d);
+    dt.setHours(0,0,0,0);
+    return dt;
+  }
+
+  // Week math is based on your chosen start date (Day 1 = start date). No snapping.
+
+  function getAbsDayIndex(weekIdx, dayIdx){
+    return weekIdx * 7 + dayIdx;
+  }
+
+  function isWithin75(absDayIndex){
+    return absDayIndex >= 0 && absDayIndex < 75;
+  }
+
+  function makeEmptyGrid(){
+    return Array.from({length: WEEKS}, () =>
+      Array.from({length: TASKS.length}, () => Array.from({length: 7}, () => false))
+    );
+  }
+
+  function defaultState(){
+    const start = new Date();
+    start.setHours(0,0,0,0);
+    return {
+      version: 2,
+      startDate: toISODate(start),
+      tasks: [...TASKS],
+      personalGoalText: "",
+      grid: makeEmptyGrid()
+    };
+  }
+
+  function loadState(){
     try{
-      await importJSON(importInput.files[0]);
-      alert("Imported backup ✅");
-    }catch(e){
-      alert("Import failed: " + e.message);
-    }finally{
-      importInput.value = "";
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return defaultState();
+      const st = JSON.parse(raw);
+      if(!st || !st.grid || !st.tasks) return defaultState();
+
+      // basic shape repair
+      if(st.tasks.length !== TASKS.length) st.tasks = [...TASKS];
+      if(st.grid.length !== WEEKS) st.grid = makeEmptyGrid();
+      if(typeof st.personalGoalText !== "string") st.personalGoalText = "";
+      if(typeof st.startDate !== "string") st.startDate = defaultState().startDate;
+
+      return st;
+    }catch{
+      return defaultState();
     }
+  }
+
+  function saveState(){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function totalCheckmarksPossible(){
+    return 75 * state.tasks.length;
+  }
+
+  function completedCheckmarks(){
+    let done = 0;
+    for(let w=0; w<state.grid.length; w++){
+      for(let d=0; d<7; d++){
+        const abs = getAbsDayIndex(w,d);
+        if(!isWithin75(abs)) continue;
+        for(let t=0; t<state.tasks.length; t++){
+          if(state.grid[w][t][d]) done++;
+        }
+      }
+    }
+    return done;
+  }
+
+  function calcStreak(){
+    const start = parseISO(state.startDate);
+    const today = new Date(); today.setHours(0,0,0,0);
+    if(today < start) return 0;
+
+    const absToday = Math.floor((today - start) / (24*60*60*1000));
+    let streak = 0;
+
+    for(let abs = absToday; abs >= 0; abs--){
+      if(!isWithin75(abs)) continue;
+      const w = Math.floor(abs / 7);
+      const d = abs % 7;
+      let all = true;
+      for(let t=0; t<state.tasks.length; t++){
+        if(!state.grid[w]?.[t]?.[d]) { all = false; break; }
+      }
+      if(all) streak++;
+      else break;
+    }
+    return streak;
+  }
+
+  function dayCompletionPct(absIndex){
+    if(absIndex < 0 || absIndex > 74) return null;
+    const w = Math.floor(absIndex / 7);
+    const d = absIndex % 7;
+    let done = 0;
+    for(let t=0; t<state.tasks.length; t++){
+      if(state.grid[w]?.[t]?.[d]) done++;
+    }
+    return Math.round((done / state.tasks.length) * 100);
+  }
+
+  function daysElapsed(){
+    const start = parseISO(state.startDate);
+    const today = new Date(); today.setHours(0,0,0,0);
+    return clamp(Math.floor((today - start)/(24*60*60*1000)), 0, 74);
+  }
+
+  function renderHeatmap(){
+    const palette = document.getElementById("paletteSelect")?.value || "green";
+    const PALETTES = {
+      green: "rgba(22,255,122,",
+      amber: "rgba(255,176,0,",
+      blue: "rgba(0,180,255,",
+      purple: "rgba(170,90,255,",
+      red: "rgba(255,80,80,",
+      pink: "rgba(255,105,180,",
+      mono: "rgba(255,255,255,"
+    };
+    const ACCENT = PALETTES[palette] || PALETTES.green;
+    const grid = document.getElementById("heatmapGrid");
+    const badge = document.getElementById("chartBadge");
+    if(!grid || !badge) return;
+
+    const start = parseISO(state.startDate);
+    const todayAbs = todayIndex();
+    badge.textContent = `Today: Day ${todayAbs + 1} / 75`;
+
+    // Build 75 cells
+    grid.innerHTML = "";
+
+    for(let w=0; w<11; w++){
+      if(w > 0){
+        const sep = document.createElement('div');
+        sep.className = 'weekSep';
+        const col = (w * 7);
+        sep.style.left = `calc(${(col/15)*100}% + 10px)`;
+        grid.appendChild(sep);
+      }
+    }
+
+    for(let i=0;i<75;i++){
+      const cell = document.createElement("div");
+      cell.className = "dayCell";
+
+      // day number label
+      const num = document.createElement("div");
+      num.className = "dayNum";
+      num.textContent = String(i + 1);
+      cell.appendChild(num);
+
+      // make "done" border inherit palette
+      cell.style.color = `${ACCENT}0.9)`;
+
+      // task completion
+      const w = Math.floor(i / 7);
+      const d = i % 7;
+      let doneTasks = 0;
+      for(let t=0; t<state.tasks.length; t++){
+        if(state.grid[w]?.[t]?.[d]) doneTasks++;
+      }
+      const totalTasks = state.tasks.length;
+      const pct = totalTasks ? Math.round((doneTasks / totalTasks) * 100) : 0; // 0..100
+      const alpha = clamp(pct/100, 0, 1);
+
+      // Visual rule:
+      // - Any day can light up if you checked things (even if it's in the future).
+      // - If it's in the future AND untouched, keep it subtle.
+      const isFuture = i > todayAbs;
+      const untouchedFuture = isFuture && alpha === 0;
+
+      if(untouchedFuture){
+        cell.classList.add("future");
+        cell.classList.add("dimNum");
+        cell.style.background = `rgba(255,255,255,.04)`;
+        cell.style.filter = "none";
+      } else {
+        // Accent with opacity based on completion
+        cell.style.background = `${ACCENT}${Math.max(0.06, alpha)})`;
+        cell.style.filter = `brightness(${0.85 + alpha*0.35})`;
+      }
+
+      // task counter / star
+      if(doneTasks === totalTasks && totalTasks > 0){
+        const star = document.createElement("div");
+        star.className = "taskStar";
+        star.textContent = "★";
+        cell.appendChild(star);
+      } else {
+        const count = document.createElement("div");
+        count.className = "taskCount";
+        count.textContent = `${doneTasks}/${totalTasks}`;
+        cell.appendChild(count);
+      }
+
+      // done = all tasks complete
+      if(pct === 0) cell.classList.add("dimNum");
+      if(pct === 100) cell.classList.add("done");
+
+      // today marker
+      if(i === todayAbs) cell.classList.add("today");
+
+      // tooltip
+      const dt = new Date(start);
+      dt.setDate(dt.getDate() + i);
+      const label = dt.toLocaleDateString(undefined, {month:"short", day:"numeric"});
+      cell.title = `Day ${i+1} • ${label} • ${pct}% complete` + (isFuture ? " • future" : "");
+
+      // Click jumps you to that day in Day view (ALWAYS)
+      cell.addEventListener("click", () => {
+        currentView = "day";
+        document.getElementById("viewSelect").value = "day";
+        document.getElementById("weekPicker").style.display = "none";
+        document.getElementById("weekCard").style.display = "none";
+        document.getElementById("dayCard").style.display = "block";
+        setDay(i);
+      });
+
+      grid.appendChild(cell);
+    }
+  }
+
+  function checklistAbsIndex(){
+    // If you're browsing Day view, checklist follows the selected day.
+    // Otherwise it follows today's day.
+    return currentView === "day" ? currentDayIndex : todayIndex();
+  }
+
+  function renderChecklist(){
+    const body = document.getElementById("checklistBody");
+    if(!body) return;
+
+    const abs = checklistAbsIndex();
+    const start = parseISO(state.startDate);
+    const dt = new Date(start);
+    dt.setDate(dt.getDate() + abs);
+
+    const badge = document.getElementById("checklistBadge");
+    if(badge){
+      const label = dt.toLocaleDateString(undefined, {weekday:"short", month:"short", day:"numeric"});
+      badge.textContent = `${label} • Day ${abs+1}/75`;
+    }
+
+    const w = Math.floor(abs / 7);
+    const d = abs % 7;
+
+    body.innerHTML = "";
+    const list = document.createElement("div");
+    list.className = "checkList";
+
+    state.tasks.forEach((taskText, taskIdx) => {
+      const item = document.createElement("div");
+      item.className = "checkItem";
+
+      const text = document.createElement("div");
+      text.className = "checkText";
+
+      if(taskIdx === state.tasks.length - 1){
+        // Personal goal line: show the goal text (editable is still in week view)
+        text.textContent = state.personalGoalText ? `Personal goal: ${state.personalGoalText}` : "Personal goal";
+        text.style.opacity = state.personalGoalText ? "1" : ".85";
+      } else {
+        text.textContent = taskText;
+      }
+
+      const toggle = document.createElement("button");
+      toggle.type = "button";
+      toggle.className = "checkToggle" + (state.grid[w][taskIdx][d] ? " on" : "");
+      toggle.setAttribute("aria-label", `Toggle ${taskText}`);
+
+      toggle.addEventListener("click", () => {
+        state.grid[w][taskIdx][d] = !state.grid[w][taskIdx][d];
+        saveState();
+        renderChecklist();
+        // Keep other views in sync
+        if(currentView === "day") renderDay(currentDayIndex);
+        else renderWeek(Number(document.getElementById("weekSelect").value || 0));
+        updateStats();
+      });
+
+      item.appendChild(text);
+      item.appendChild(toggle);
+      list.appendChild(item);
+    });
+
+    body.appendChild(list);
+
+    // mini prev/next controls (same as daily arrows)
+    const prev = document.getElementById("prevDayMini");
+    const next = document.getElementById("nextDayMini");
+    if(prev && next){
+      prev.disabled = abs <= 0;
+      next.disabled = abs >= 74;
+      prev.style.opacity = prev.disabled ? ".45" : "1";
+      next.style.opacity = next.disabled ? ".45" : "1";
+
+      prev.onclick = () => {
+        const nxt = abs - 1;
+        currentDayIndex = nxt;
+        if(currentView === "day") setDay(nxt);
+        renderChecklist();
+      };
+      next.onclick = () => {
+        const nxt = abs + 1;
+        currentDayIndex = nxt;
+        if(currentView === "day") setDay(nxt);
+        renderChecklist();
+      };
+    }
+  }
+
+  function updateStats(){
+    const done = completedCheckmarks();
+    const total = totalCheckmarksPossible();
+    const pct = total ? Math.round((done/total)*100) : 0;
+    const pEl = document.getElementById("progressText");
+    const cEl = document.getElementById("checksText");
+    const sEl = document.getElementById("streakText");
+    if(pEl) pEl.textContent = pct + "%";
+    if(cEl) cEl.textContent = `${done} / ${total}`;
+    if(sEl) sEl.textContent = String(calcStreak());
+    renderHeatmap();
+    renderChecklist();
+  }
+
+  function buildWeekOptions(){
+    const sel = document.getElementById("weekSelect");
+    sel.innerHTML = "";
+    for(let i=0; i<WEEKS; i++){
+      const opt = document.createElement("option");
+      opt.value = String(i);
+      opt.textContent = `Week ${i+1}`;
+      sel.appendChild(opt);
+    }
+  }
+
+  function formatRangeForWeek(weekIdx){
+    const start = parseISO(state.startDate);
+    const wStart = new Date(start);
+    wStart.setDate(wStart.getDate() + weekIdx*7);
+    const wEnd = new Date(wStart);
+    wEnd.setDate(wEnd.getDate() + 6);
+
+    const fmt = (d) => d.toLocaleDateString(undefined, {month:"short", day:"numeric"});
+    return `${fmt(wStart)} – ${fmt(wEnd)}`;
+  }
+
+  function renderWeek(weekIdx){
+    currentView = "week";
+    weekIdx = Math.max(0, Math.min(WEEKS-1, Number(weekIdx)||0));
+
+    const card = document.getElementById("weekCard");
+    card.innerHTML = "";
+
+    const header = document.createElement("div");
+    header.className = "weekHeader";
+
+    const h2 = document.createElement("h2");
+    h2.textContent = `Week ${weekIdx+1}`;
+
+    const badge = document.createElement("span");
+    badge.className = "badge";
+    badge.textContent = formatRangeForWeek(weekIdx);
+    h2.appendChild(badge);
+
+    const dow = document.createElement("div");
+    dow.className = "dow";
+
+    // Dynamic weekday labels based on the chosen start date
+    const start = parseISO(state.startDate);
+    const base = new Date(start);
+    base.setDate(base.getDate() + weekIdx*7);
+    const fmtW = new Intl.DateTimeFormat(undefined, {weekday:"short"});
+    for(let i=0;i<7;i++){
+      const dt = new Date(base);
+      dt.setDate(dt.getDate() + i);
+      const d = document.createElement("div");
+      d.textContent = fmtW.format(dt).replace('.', '').slice(0,3);
+      dow.appendChild(d);
+    }
+
+    header.appendChild(h2);
+    header.appendChild(dow);
+
+    const body = document.createElement("div");
+    body.className = "weekBody";
+
+    state.tasks.forEach((taskText, taskIdx) => {
+      const row = document.createElement("div");
+      row.className = "row";
+
+      const left = document.createElement("div");
+      left.className = "task";
+
+      if(taskIdx === state.tasks.length - 1){
+        const wrap = document.createElement("div");
+        wrap.className = "goalWrap";
+        const label = document.createElement("div");
+        label.textContent = taskText;
+        label.style.opacity = ".92";
+
+        const input = document.createElement("input");
+        input.className = "goalInput";
+        input.placeholder = "Type your personal goal…";
+        input.value = state.personalGoalText || "";
+        input.addEventListener("input", () => {
+          state.personalGoalText = input.value;
+          saveState();
+        });
+
+        wrap.appendChild(label);
+        wrap.appendChild(input);
+        left.appendChild(wrap);
+      } else {
+        left.textContent = taskText;
+      }
+
+      const dots = document.createElement("div");
+      dots.className = "dots";
+
+      for(let dayIdx=0; dayIdx<7; dayIdx++){
+        const abs = getAbsDayIndex(weekIdx, dayIdx);
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "dot" + (state.grid[weekIdx][taskIdx][dayIdx] ? " on" : "");
+        btn.setAttribute("aria-label", `${taskText} day ${dayIdx+1}`);
+
+        if(!isWithin75(abs)){
+          btn.classList.add("disabled");
+          btn.disabled = true;
+          btn.title = "Outside the 75-day challenge";
+        } else {
+          btn.title = "Tap to toggle";
+          btn.addEventListener("click", () => {
+            state.grid[weekIdx][taskIdx][dayIdx] = !state.grid[weekIdx][taskIdx][dayIdx];
+            saveState();
+            renderWeek(weekIdx);
+            updateStats();
+          });
+        }
+
+        dots.appendChild(btn);
+      }
+
+      row.appendChild(left);
+      row.appendChild(dots);
+      body.appendChild(row);
+    });
+
+    card.appendChild(header);
+    card.appendChild(body);
+
+    updateStats();
+  }
+
+  function weeksBetween(start, date){
+    const ms = (date - start);
+    return Math.floor(ms / (7*24*60*60*1000));
+  }
+
+  function jumpToToday(){
+    if(currentView === "day"){ setDay(todayIndex()); return; }
+
+    const start = parseISO(state.startDate);
+    const today = new Date(); today.setHours(0,0,0,0);
+    const weekIdx = Math.max(0, Math.min(WEEKS-1, weeksBetween(start, today)));
+
+    document.getElementById("weekSelect").value = String(weekIdx);
+    renderWeek(weekIdx);
+  }
+
+  function exportJSON(){
+    const blob = new Blob([JSON.stringify(state, null, 2)], {type:"application/json"});
+    const a = document.createElement("a");
+    const ts = new Date().toISOString().slice(0,10);
+    a.href = URL.createObjectURL(blob);
+    a.download = `75-soft-backup-${ts}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(a.href);
+  }
+
+  async function importJSON(file){
+    const text = await file.text();
+    const obj = JSON.parse(text);
+    if(!obj || !obj.grid || !obj.tasks) throw new Error("Invalid backup file");
+    state = obj;
+    saveState();
+    initUI();
+  }
+
+  function resetAll(){
+    currentView = "week";
+
+    // Canvas/embedded previews sometimes block confirm dialogs,
+    // so we reset immediately and show a visual refresh.
+    state.grid = makeEmptyGrid();
+    state.personalGoalText = "";
+    saveState();
+
+    // Force UI refresh
+    buildWeekOptions();
+    currentDayIndex = todayIndex();
+    jumpToToday();
+    updateStats();
+  }
+
+  function initUI(){
+    const viewSel = document.getElementById("viewSelect");
+    viewSel.addEventListener("change", () => {
+      currentView = viewSel.value;
+      document.getElementById("weekPicker").style.display = currentView === "week" ? "flex" : "none";
+      document.getElementById("weekCard").style.display = currentView === "week" ? "block" : "none";
+      document.getElementById("dayCard").style.display = currentView === "day" ? "block" : "none";
+      if(currentView === "day") setDay(todayIndex());
+      else jumpToToday();
+      renderChecklist();
+    });
+
+    buildWeekOptions();
+
+    const startInput = document.getElementById("startDate");
+    startInput.value = state.startDate;
+    startInput.addEventListener("change", () => {
+      // Use the exact date you pick.
+      state.startDate = startInput.value;
+      saveState();
+      jumpToToday();
+      updateStats();
+    });
+
+    const weekSel = document.getElementById("weekSelect");
+    weekSel.addEventListener("change", () => renderWeek(weekSel.value));
+
+    document.getElementById("todayBtn").addEventListener("click", jumpToToday);
+    document.getElementById("exportBtn").addEventListener("click", exportJSON);
+    document.getElementById("resetBtn").addEventListener("click", resetAll);
+
+    const importInput = document.getElementById("importInput");
+    importInput.addEventListener("change", async () => {
+      if(!importInput.files?.[0]) return;
+      try{
+        await importJSON(importInput.files[0]);
+        alert("Imported backup ✅");
+      }catch(e){
+        alert("Import failed: " + e.message);
+      }finally{
+        importInput.value = "";
+      }
+    });
+
+    jumpToToday();
+    renderChecklist();
+  }
+
+  let state = loadState();
+  let currentView = "week";
+  let currentDayIndex = 0;
+  window.addEventListener("DOMContentLoaded", () => {
+    initUI();
+    document.getElementById("weekPicker").style.display = "flex";
+
+    // Redraw chart on resize
+    let t = null;
+    window.addEventListener("resize", () => {
+      clearTimeout(t);
+      t = setTimeout(() => renderHeatmap(), 80);
+    });
+
+    const pal = document.getElementById("paletteSelect");
+    if(pal){ pal.addEventListener("change", renderHeatmap); }
   });
-
-  // Default view
-  jumpToToday();
-}
-
-/* ===== bootstrap ===== */
-let state = loadState();
-registerServiceWorker();
-initUI();
 </script>
 </body>
 </html>
+
