@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#e9dccf" />
+  <title>75 Soft Challenge</title>
+
+  <style>
+    :root{
+      --bg:#fbf6f0;
+      --card:#fffaf4;
+      --ink:#1e1b18;
+      --muted:#6d625b;
+      --accent:#e9dccf;
+      --dot:#eadfd6;
+      --dotOn:#2a2521;
+      --shadow: 0 10px 30px rgba(20, 15, 10, .08);
+      --radius:18px;
+      --ring: rgba(42, 37, 33, .12);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-serif, Georgia, "Times New Roman", serif;
+      color:var(--ink);
+      background:var(--bg);
+      -webkit-font-smoothing:antialiased;
+      padding: 18px 14px 40px;
+    }
+    .wrap{max-width: 900px; margin:0 auto;}
+    header{
+      display:flex; align-items:flex-start; justify-content:space-between;
+      gap:12px; margin-bottom:14px;
+    }
+    h1{
+      margin:0;
+      font-size: 40px;
+      letter-spacing: .4px;
+      line-height: 1.05;
+    }
+    .sub{
+      margin-top:6px;
+      color:var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      font-size: 13px;
+    }
+    .topActions{
+      display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;
+    }
+    button, .btnLike{
+      border:1px solid var(--ring);
+      background: var(--card);
+      color: var(--ink);
+      padding: 10px 12px;
+      border-radius: 14px;
+      box-shadow: 0 8px 18px rgba(20,15,10,.06);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      font-size: 13px;
+      cursor:pointer;
+      touch-action: manipulation;
+    }
+    button:active{transform: translateY(1px)}
+    .stats{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:10px;
+      margin: 10px 0 14px;
+    }
+    .stat{
+      background:var(--card);
+      border:1px solid var(--ring);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:12px 12px;
+    }
+    .stat .label{
+      color:var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      font-size:12px;
+      margin-bottom:6px;
+    }
+    .stat .value{
+      font-size:18px;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      font-weight: 650;
+    }
+
+    .controls{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      margin: 10px 0 14px;
+    }
+    .select{
+      display:flex; gap:8px; align-items:center;
+      background:var(--card);
+      border:1px solid var(--ring);
+      border-radius: 14px;
+      padding: 10px 12px;
+      box-shadow: 0 8px 18px rgba(20,15,10,.06);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      font-size: 13px;
+    }
+    select{
+      border:none;
+      background:transparent;
+      font-size:13px;
+      outline:none;
+    }
+
+    .weekCard{
+      background:var(--card);
+      border:1px solid var(--ring);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .weekHeader{
+      background: var(--accent);
+      padding: 12px 14px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+    }
+    .weekTitle{
+      font-size: 28px;
+      margin:0;
+    }
+    .dow{
+      display:grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap:10px;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      font-size: 12px;
+      color: rgba(30,27,24,.85);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      width: 260px;
+      text-align:center;
+    }
+    .weekBody{ padding: 10px 14px 14px; }
+    .row{
+      display:grid;
+      grid-template-columns: 1fr 260px;
+      gap: 10px;
+      align-items:center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(42,37,33,.06);
+    }
+    .row:last-child{border-bottom:none}
+    .task{
+      font-size: 16px;
+      line-height: 1.2;
+    }
+    .dots{
+      display:grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap:10px;
+      justify-items:center;
+    }
+    .dot{
+      width: 22px; height: 22px;
+      border-radius: 999px;
+      background: var(--dot);
+      border: 1px solid rgba(42,37,33,.05);
+      cursor:pointer;
+      position:relative;
+      outline:none;
+    }
+    .dot.on{
+      background: var(--dotOn);
+      border-color: rgba(42,37,33,.2);
+    }
+    .dot.on::after{
+      content:"";
+      position:absolute; inset:6px;
+      border-radius:999px;
+      background: rgba(255,250,244,.95);
+      opacity:.12;
+    }
+    .goalInput{
+      width: 100%;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      font-size: 14px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--ring);
+      background: #fff;
+      outline:none;
+    }
+
+    .footerNote{
+      margin-top: 14px;
+      color:var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    /* Mobile: stack columns */
+    @media (max-width: 620px){
+      h1{font-size:34px}
+      .stats{grid-template-columns:1fr}
+      .row{grid-template-columns:1fr}
+      .dow{width:100%}
+      .dots{justify-items:start}
+      .dot{width:24px;height:24px}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>75 Soft Challenge</h1>
+        <div class="sub">Tap the circles. Everything saves automatically on this device.</div>
+      </div>
+      <div class="topActions">
+        <button id="todayBtn" title="Jump to current week">Today</button>
+        <button id="exportBtn" title="Download a backup JSON">Export</button>
+        <label class="btnLike" title="Restore from a backup JSON">
+          Import<input id="importInput" type="file" accept="application/json" hidden>
+        </label>
+        <button id="resetBtn" title="Clear all checkmarks">Reset</button>
+      </div>
+    </header>
+
+    <section class="stats">
+      <div class="stat">
+        <div class="label">Overall progress</div>
+        <div class="value" id="progressText">0%</div>
+      </div>
+      <div class="stat">
+        <div class="label">Completed checkmarks</div>
+        <div class="value" id="checksText">0 / 0</div>
+      </div>
+      <div class="stat">
+        <div class="label">Streak (days)</div>
+        <div class="value" id="streakText">0</div>
+      </div>
+    </section>
+
+    <div class="controls">
+      <div class="select">
+        <span>Start date</span>
+        <input id="startDate" type="date" style="border:none;background:transparent;outline:none;font-family:inherit;font-size:13px;">
+      </div>
+
+      <div class="select">
+        <span>Week</span>
+        <select id="weekSelect"></select>
+      </div>
+    </div>
+
+    <section class="weekCard" id="weekCard">
+      <!-- Rendered by JS -->
+    </section>
+
+    <div class="footerNote">
+      Tip: on iPhone use <b>Share → Add to Home Screen</b>. On Android (Chrome) use <b>⋮ → Add to Home screen</b>.
+      Export a backup if you’re switching phones.
+    </div>
+  </div>
+
+<script>
+/* ===== 75 Soft PWA-like tracker (single file) ===== */
+
+const DEFAULT_TASKS = [
+  "Eat well; follow your diet plan",
+  "Drink 3L of water to hydrate",
+  "Daily 45-minute workout",
+  "Only drink at social events",
+  "Read 10 pages of any book",
+  "Personal goal:"
+];
+
+const DOW = ["M","T","W","T","F","S","S"]; // matches your sheet
+const STORAGE_KEY = "soft75_state_v1";
+
+function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
+
+function toISODate(d){
+  const dt = new Date(d);
+  dt.setHours(0,0,0,0);
+  return dt.toISOString().slice(0,10);
+}
+function parseISO(s){
+  const [y,m,d] = s.split("-").map(Number);
+  const dt = new Date(y, m-1, d);
+  dt.setHours(0,0,0,0);
+  return dt;
+}
+
+// Monday-based day index (Mon=0..Sun=6)
+function mondayIndex(date){
+  const js = date.getDay(); // Sun=0..Sat=6
+  return (js + 6) % 7;
+}
+
+// Given a date, return the Monday of its week
+function weekStartMonday(date){
+  const dt = new Date(date);
+  dt.setHours(0,0,0,0);
+  const idx = mondayIndex(dt);
+  dt.setDate(dt.getDate() - idx);
+  return dt;
+}
+
+function weeksBetween(start, date){
+  const ms = weekStartMonday(date) - weekStartMonday(start);
+  return Math.floor(ms / (7*24*60*60*1000));
+}
+
+function makeEmptyGrid(){
+  // 75 days -> 11 weeks (77 days) but we only count 75; still show 11 weeks for clean grid.
+  // We'll store as 11 weeks x tasks x 7
+  const weeks = 11;
+  const tasks = DEFAULT_TASKS.length;
+  const grid = Array.from({length: weeks}, () =>
+    Array.from({length: tasks}, () => Array.from({length: 7}, () => false))
+  );
+  return grid;
+}
+
+function defaultState(){
+  // pick today as start date by default, snapped to Monday for nicer Week 1
+  const today = new Date();
+  const start = weekStartMonday(today);
+  return {
+    version: 1,
+    startDate: toISODate(start),
+    tasks: [...DEFAULT_TASKS],
+    personalGoalText: "",
+    grid: makeEmptyGrid()
+  };
+}
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return defaultState();
+    const parsed = JSON.parse(raw);
+
+    // Minimal migration / sanity checks
+    if(!parsed.grid || !parsed.tasks) return defaultState();
+    if(parsed.tasks.length !== DEFAULT_TASKS.length){
+      // keep old checks where possible
+      const st = defaultState();
+      st.startDate = parsed.startDate || st.startDate;
+      st.personalGoalText = parsed.personalGoalText || "";
+      // copy overlap
+      for(let w=0; w<Math.min(st.grid.length, parsed.grid.length); w++){
+        for(let t=0; t<Math.min(st.tasks.length, parsed.tasks.length); t++){
+          for(let d=0; d<7; d++){
+            st.grid[w][t][d] = !!(parsed.grid[w]?.[t]?.[d]);
+          }
+        }
+      }
+      return st;
+    }
+    return parsed;
+  }catch(e){
+    return defaultState();
+  }
+}
+
+function saveState(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function totalCheckmarksPossible(){
+  // We show 11*tasks*7 but challenge is 75 days; we’ll compute progress only for first 75 days * tasks.
+  // Convert week/day into absolute day index from startDate Monday.
+  const tasks = state.tasks.length;
+  return 75 * tasks;
+}
+
+function isWithin75(absDayIndex){
+  return absDayIndex >= 0 && absDayIndex < 75;
+}
+
+function getAbsDayIndex(weekIdx, dayIdx){
+  return weekIdx*7 + dayIdx;
+}
+
+function completedCheckmarks(){
+  let done = 0;
+  const tasks = state.tasks.length;
+  for(let w=0; w<state.grid.length; w++){
+    for(let d=0; d<7; d++){
+      const abs = getAbsDayIndex(w,d);
+      if(!isWithin75(abs)) continue;
+      for(let t=0; t<tasks; t++){
+        if(state.grid[w][t][d]) done++;
+      }
+    }
+  }
+  return done;
+}
+
+function calcStreak(){
+  // streak counts consecutive days from today backwards where ALL tasks are checked for that day
+  const start = parseISO(state.startDate);
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  // if today is before start date, streak is 0
+  if(today < start) return 0;
+
+  const absToday = Math.floor((today - start) / (24*60*60*1000));
+  let streak = 0;
+  for(let abs = absToday; abs >= 0; abs--){
+    if(!isWithin75(abs)) continue; // beyond 75 doesn't count
+    const w = Math.floor(abs / 7);
+    const d = abs % 7;
+    let all = true;
+    for(let t=0; t<state.tasks.length; t++){
+      if(!state.grid[w]?.[t]?.[d]) { all = false; break; }
+    }
+    if(all) streak++;
+    else break;
+  }
+  return streak;
+}
+
+function updateStats(){
+  const done = completedCheckmarks();
+  const total = totalCheckmarksPossible();
+  const pct = total ? Math.round((done/total)*100) : 0;
+
+  document.getElementById("progressText").textContent = pct + "%";
+  document.getElementById("checksText").textContent = `${done} / ${total}`;
+  document.getElementById("streakText").textContent = String(calcStreak());
+}
+
+function buildWeekOptions(){
+  const sel = document.getElementById("weekSelect");
+  sel.innerHTML = "";
+  for(let i=0;i<state.grid.length;i++){
+    const opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = `Week ${i+1}`;
+    sel.appendChild(opt);
+  }
+}
+
+function renderWeek(weekIdx){
+  weekIdx = clamp(Number(weekIdx)||0, 0, state.grid.length-1);
+  const card = document.getElementById("weekCard");
+
+  const header = document.createElement("div");
+  header.className = "weekHeader";
+
+  const title = document.createElement("h2");
+  title.className = "weekTitle";
+  title.textContent = `Week ${weekIdx+1}`;
+
+  const dow = document.createElement("div");
+  dow.className = "dow";
+  for(const d of DOW){
+    const span = document.createElement("div");
+    span.textContent = d;
+    dow.appendChild(span);
+  }
+
+  header.appendChild(title);
+  header.appendChild(dow);
+
+  const body = document.createElement("div");
+  body.className = "weekBody";
+
+  state.tasks.forEach((taskText, taskIdx) => {
+    const row = document.createElement("div");
+    row.className = "row";
+
+    const left = document.createElement("div");
+    left.className = "task";
+
+    // Personal goal special row with input
+    if(taskIdx === state.tasks.length - 1){
+      const label = document.createElement("div");
+      label.textContent = taskText;
+      label.style.marginBottom = "8px";
+
+      const input = document.createElement("input");
+      input.className = "goalInput";
+      input.placeholder = "Type your personal goal (editable)…";
+      input.value = state.personalGoalText || "";
+      input.addEventListener("input", () => {
+        state.personalGoalText = input.value;
+        saveState();
+      });
+
+      left.appendChild(label);
+      left.appendChild(input);
+    } else {
+      left.textContent = taskText;
+    }
+
+    const dots = document.createElement("div");
+    dots.className = "dots";
+
+    for(let dayIdx=0; dayIdx<7; dayIdx++){
+      const abs = getAbsDayIndex(weekIdx, dayIdx);
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "dot" + (state.grid[weekIdx][taskIdx][dayIdx] ? " on" : "");
+      btn.setAttribute("aria-label", `${taskText} day ${dayIdx+1}`);
+      btn.title = isWithin75(abs) ? "Tap to toggle" : "Outside 75 days";
+
+      if(!isWithin75(abs)){
+        btn.style.opacity = ".35";
+        btn.style.cursor = "not-allowed";
+        btn.disabled = true;
+      } else {
+        btn.addEventListener("click", () => {
+          state.grid[weekIdx][taskIdx][dayIdx] = !state.grid[weekIdx][taskIdx][dayIdx];
+          saveState();
+          renderWeek(weekIdx);
+          updateStats();
+        });
+      }
+
+      dots.appendChild(btn);
+    }
+
+    row.appendChild(left);
+    row.appendChild(dots);
+    body.appendChild(row);
+  });
+
+  card.innerHTML = "";
+  card.appendChild(header);
+  card.appendChild(body);
+  updateStats();
+}
+
+function jumpToToday(){
+  const start = parseISO(state.startDate);
+  const today = new Date(); today.setHours(0,0,0,0);
+  const weekIdx = clamp(weeksBetween(start, today), 0, state.grid.length-1);
+  document.getElementById("weekSelect").value = String(weekIdx);
+  renderWeek(weekIdx);
+}
+
+function exportJSON(){
+  const blob = new Blob([JSON.stringify(state, null, 2)], {type:"application/json"});
+  const a = document.createElement("a");
+  const ts = new Date().toISOString().slice(0,10);
+  a.href = URL.createObjectURL(blob);
+  a.download = `75-soft-backup-${ts}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(a.href);
+}
+
+async function importJSON(file){
+  const text = await file.text();
+  const obj = JSON.parse(text);
+  // basic validation
+  if(!obj || !obj.grid || !obj.tasks) throw new Error("Invalid backup file.");
+  state = obj;
+  saveState();
+  initUI();
+}
+
+function resetAll(){
+  if(!confirm("Reset all checkmarks? This clears your progress on this device.")) return;
+  const keepStart = state.startDate;
+  const keepGoal = state.personalGoalText || "";
+  state = defaultState();
+  state.startDate = keepStart;
+  state.personalGoalText = keepGoal;
+  saveState();
+  initUI();
+}
+
+/* ===== PWA install/offline (minimal) ===== */
+function registerServiceWorker(){
+  if(!("serviceWorker" in navigator)) return;
+
+  // create a tiny service worker from a Blob so we stay single-file
+  const swCode = `
+    const CACHE_NAME = "soft75-cache-v1";
+    self.addEventListener("install", (e) => {
+      e.waitUntil((async () => {
+        const cache = await caches.open(CACHE_NAME);
+        await cache.addAll(["./"]);
+        self.skipWaiting();
+      })());
+    });
+    self.addEventListener("activate", (e) => {
+      e.waitUntil(self.clients.claim());
+    });
+    self.addEventListener("fetch", (e) => {
+      e.respondWith((async () => {
+        const cached = await caches.match(e.request);
+        if(cached) return cached;
+        try{
+          const res = await fetch(e.request);
+          const cache = await caches.open(CACHE_NAME);
+          cache.put(e.request, res.clone());
+          return res;
+        }catch(err){
+          return caches.match("./");
+        }
+      })());
+    });
+  `;
+  const swBlob = new Blob([swCode], {type:"text/javascript"});
+  const swUrl = URL.createObjectURL(swBlob);
+  navigator.serviceWorker.register(swUrl).catch(()=>{});
+}
+
+function setStartDate(dateStr){
+  state.startDate = dateStr;
+  saveState();
+  jumpToToday();
+  updateStats();
+}
+
+function initUI(){
+  buildWeekOptions();
+
+  // Start date input
+  const startInput = document.getElementById("startDate");
+  startInput.value = state.startDate || toISODate(new Date());
+  startInput.addEventListener("change", () => {
+    // Snap chosen date to Monday so the weeks match the sheet nicely
+    const chosen = parseISO(startInput.value);
+    const monday = weekStartMonday(chosen);
+    startInput.value = toISODate(monday);
+    setStartDate(startInput.value);
+  });
+
+  // Week select
+  const sel = document.getElementById("weekSelect");
+  sel.addEventListener("change", () => renderWeek(sel.value));
+
+  // Buttons
+  document.getElementById("todayBtn").addEventListener("click", jumpToToday);
+  document.getElementById("exportBtn").addEventListener("click", exportJSON);
+  document.getElementById("resetBtn").addEventListener("click", resetAll);
+
+  const importInput = document.getElementById("importInput");
+  importInput.addEventListener("change", async () => {
+    if(!importInput.files?.[0]) return;
+    try{
+      await importJSON(importInput.files[0]);
+      alert("Imported backup ✅");
+    }catch(e){
+      alert("Import failed: " + e.message);
+    }finally{
+      importInput.value = "";
+    }
+  });
+
+  // Default view
+  jumpToToday();
+}
+
+/* ===== bootstrap ===== */
+let state = loadState();
+registerServiceWorker();
+initUI();
+</script>
+</body>
+</html>
